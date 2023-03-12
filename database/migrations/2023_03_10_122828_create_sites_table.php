@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->string('scheme');
+            $table->string('domain');
+            $table->boolean('default')->default(0);
             $table->timestamps();
         });
     }
