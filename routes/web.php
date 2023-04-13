@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EndpointsStoreController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SitesStoreController;
 use Illuminate\Foundation\Application;
@@ -34,6 +35,10 @@ Route::get('/dashboard/{site?}', DashboardController::class)
 Route::post('/sites', SitesStoreController::class)
      ->middleware(['auth'])
      ->name('add-site');
+
+Route::post('/sites/{site}/endpoints', EndpointsStoreController::class)
+     ->middleware(['auth'])
+     ->name('add-endpoint');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

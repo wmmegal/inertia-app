@@ -10,7 +10,7 @@ class SiteFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'    => $this->faker->randomNumber(),
+            'user_id'    => 1,
             'scheme'     => $this->faker->word(),
             'domain'     => $this->faker->word(),
             'default'    => $this->faker->boolean(),

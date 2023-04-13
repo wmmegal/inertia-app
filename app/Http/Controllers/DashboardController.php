@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EndpointResource;
 use App\Http\Resources\SiteResource;
 use App\Models\Site;
 use Illuminate\Http\Request;
@@ -17,8 +18,9 @@ class DashboardController extends Controller
         }
 
         return inertia('Dashboard', [
-            'site'  => SiteResource::make($site),
-            'sites' => SiteResource::collection(Site::get())
+            'site'  => $site ? SiteResource::make($site) : null,
+            'sites' => $site ? SiteResource::collection(Site::get()) : null,
+            'endpoints' => EndpointResource::collection($site->endpoints)
         ]);
     }
 }
