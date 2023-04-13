@@ -72,10 +72,12 @@ const editForm = useForm({
 })
 
 const editEndpoint = debounce(() => {
-    console.log('some api requests')
+    editForm.patch(`endpoints/${props.endpoint.id}`, {
+        preserveScroll: true
+    })
 }, 500)
 
-watch(editForm, () => {
+watch(() => editForm.isDirty, () => {
     editEndpoint()
 })
 
