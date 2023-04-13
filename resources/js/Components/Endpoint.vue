@@ -23,7 +23,7 @@
             </button>
         </td>
         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 w-16">
-            <button class="text-red-600 hover:text-red-900">
+            <button @click="deleteEndpoint" class="text-red-600 hover:text-red-900">
                 Delete
             </button>
         </td>
@@ -31,7 +31,15 @@
 </template>
 
 <script setup>
-defineProps({
+import { router } from '@inertiajs/vue3'
+
+const props = defineProps({
     endpoint: Object
 })
+
+const deleteEndpoint = () => {
+    if (window.confirm('You sure?')) {
+        router.delete(`endpoints/${props.endpoint.id}`)
+    }
+}
 </script>
