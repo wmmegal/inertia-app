@@ -18,7 +18,7 @@ class Site extends Model
         'scheme'
     ];
 
-    public function url()
+    public function url(): string
     {
         return $this->scheme.'://'.$this->domain;
     }
