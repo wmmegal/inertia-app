@@ -41,7 +41,6 @@ class PerformEndpointCheck implements ShouldQueue
         }
 
 
-
         $this->endpoint->update([
             'next_check' => now()->addSeconds($this->endpoint->frequency)
         ]);

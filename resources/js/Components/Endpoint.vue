@@ -3,7 +3,8 @@
         <td class="whitespace-nowrap pl-4 sm:pl-6 px-3 text-sm font-medium text-gray-900 w-64">
             <template v-if="editing">
                 <InputLabel for="location" value="Location" class="sr-only"/>
-                <TextInput id="location" type="text" class="block w-full h-9 text-sm" v-model="editForm.location" placeholder="e.g. /pricing"/>
+                <TextInput id="location" type="text" class="block w-full h-9 text-sm" v-model="editForm.location"
+                           placeholder="e.g. /pricing"/>
             </template>
             <template v-else>
                 <a href="/" class="text-indigo-600 hover:text-indigo-900">
@@ -29,10 +30,22 @@
             </template>
         </td>
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            Last check
+            <template v-if="endpoint.latest_check">
+                {{ endpoint.latest_check.created_at.human }}
+            </template>
+            <template v-else>
+                -
+            </template>
         </td>
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            Status
+            <template v-if="endpoint.latest_check">
+                <span class="inline-flex items-center rounded-md px-2.5 py-0.5 text-sm font-medium" :class="{ 'bg-green-100 text-green-800': endpoint.latest_check.is_successful, 'bg-red-100 text-red-800': !endpoint.latest_check.is_successful }">
+                    {{ endpoint.latest_check.response_code }} {{ endpoint.latest_check.status_text }}
+                </span>
+            </template>
+            <template v-else>
+                -
+            </template>
         </td>
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             x%
