@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use App\Enums\EnumFrequency;
 use App\Http\Resources\EnumFrequencyResource;
+use App\Http\Resources\SiteResource;
+use App\Models\Site;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -41,7 +43,8 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
-            'endpointFrequencies' => EnumFrequencyResource::collection(EnumFrequency::cases())
+            'endpointFrequencies' => EnumFrequencyResource::collection(EnumFrequency::cases()),
+            'sites'               => $request->user() ? SiteResource::collection($request->user()->sites()->latest()->get()) : null
         ]);
     }
 }

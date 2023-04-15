@@ -16,11 +16,15 @@ class EndpointResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'location' => $this->location,
+            'id'              => $this->id,
+            'location'        => $this->location,
             'frequency_label' => EnumFrequency::from($this->frequency)->label(),
             'frequency_value' => EnumFrequency::from($this->frequency)->value,
-            'latest_check' => CheckResource::make($this->check)
+            'latest_check'    => CheckResource::make($this->check),
+            'url'             => $this->url(),
+            'site'            => $this->site,
+            'checks'          => CheckResource::collection($this->checks),
+            'uptime_percent'  => $this->uptimePercent()
         ];
     }
 }

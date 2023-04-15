@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EndpointDestroyController;
+use App\Http\Controllers\EndpointIndexController;
 use App\Http\Controllers\EndpointsStoreController;
 use App\Http\Controllers\EndpointUpdateController;
 use App\Http\Controllers\ProfileController;
@@ -30,6 +31,7 @@ Route::get('/', function () {
     ]);
 });
 
+// sites
 Route::get('/dashboard/{site?}', DashboardController::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -38,18 +40,26 @@ Route::post('/sites', SitesStoreController::class)
      ->middleware(['auth'])
      ->name('add-site');
 
+//endpoints
 Route::post('/sites/{site}/endpoints', EndpointsStoreController::class)
      ->middleware(['auth'])
      ->name('add-endpoint');
 
-Route::delete('/endpoints/{endpoint}', EndpointDestroyController::class)
+Route::get('/endpoints/{endpoint}', EndpointIndexController::class)
      ->middleware(['auth'])
-     ->name('delete-endpoint');
+     ->name('show-endpoint');
 
 Route::patch('/endpoints/{endpoint}', EndpointUpdateController::class)
      ->middleware(['auth'])
      ->name('update-endpoint');
 
+Route::delete('/endpoints/{endpoint}', EndpointDestroyController::class)
+     ->middleware(['auth'])
+     ->name('delete-endpoint');
+
+
+
+// user
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

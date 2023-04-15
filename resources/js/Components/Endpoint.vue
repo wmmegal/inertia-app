@@ -7,9 +7,9 @@
                            placeholder="e.g. /pricing"/>
             </template>
             <template v-else>
-                <a href="/" class="text-indigo-600 hover:text-indigo-900">
+                <Link :href="route('show-endpoint', endpoint)" class="text-indigo-600 hover:text-indigo-900">
                     {{ endpoint.location }}
-                </a>
+                </Link>
             </template>
 
         </td>
@@ -31,7 +31,7 @@
         </td>
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <template v-if="endpoint.latest_check">
-                {{ endpoint.latest_check.created_at.human }}
+                {{ endpoint.latest_check.created_at.date_time }}
             </template>
             <template v-else>
                 -
@@ -39,7 +39,8 @@
         </td>
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <template v-if="endpoint.latest_check">
-                <span class="inline-flex items-center rounded-md px-2.5 py-0.5 text-sm font-medium" :class="{ 'bg-green-100 text-green-800': endpoint.latest_check.is_successful, 'bg-red-100 text-red-800': !endpoint.latest_check.is_successful }">
+                <span class="inline-flex items-center rounded-md px-2.5 py-0.5 text-sm font-medium"
+                      :class="{ 'bg-green-100 text-green-800': endpoint.latest_check.is_successful, 'bg-red-100 text-red-800': !endpoint.latest_check.is_successful }">
                     {{ endpoint.latest_check.response_code }} {{ endpoint.latest_check.status_text }}
                 </span>
             </template>
@@ -48,7 +49,12 @@
             </template>
         </td>
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            x%
+            <template v-if="endpoint.uptime_percent !== null">
+                {{ endpoint.uptime_percent }}%
+            </template>
+            <template v-else>
+                -
+            </template>
         </td>
         <td class="whitespace-nowrap pl-3 pr-4 text-right text-sm font-medium sm:pr-6 w-32">
             <button @click="editing = !editing" class="text-indigo-600 hover:text-indigo-900">
@@ -64,7 +70,7 @@
 </template>
 
 <script setup>
-import {router, usePage, useForm} from '@inertiajs/vue3'
+import {router, usePage, useForm, Link} from '@inertiajs/vue3'
 import {ref, watch} from "vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -85,7 +91,7 @@ const editForm = useForm({
 })
 
 const editEndpoint = debounce(() => {
-    editForm.patch(`endpoints/${props.endpoint.id}`, {
+    editForm.patch(route('update-endpoint', props.endpoint), {
         preserveScroll: true
     })
 }, 500)
@@ -96,7 +102,7 @@ watch(() => editForm.isDirty, () => {
 
 const deleteEndpoint = () => {
     if (window.confirm('You sure?')) {
-        router.delete(`endpoints/${props.endpoint.id}`)
+        router.delete(route('delete-endpoint', props.endpoint))
     }
 }
 </script>

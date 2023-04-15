@@ -19,7 +19,6 @@ class DashboardController extends Controller
 
         return inertia('Dashboard', [
             'site'  => $site ? SiteResource::make($site) : null,
-            'sites' => $site ? SiteResource::collection(Site::get()) : null,
             'endpoints' => EndpointResource::collection($site->endpoints)
         ]);
     }
