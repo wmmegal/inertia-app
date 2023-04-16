@@ -43,7 +43,7 @@
                     </form>
                     <div class="mt-8 flex flex-col">
                         <h2 class="font-semibold text-lg text-gray-800 leading-tight">
-                            Currently monitoring (0)
+                            Currently monitoring ({{ endpoints.data.length }})
                         </h2>
                         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 mt-3">
                             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
