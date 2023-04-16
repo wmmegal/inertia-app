@@ -15,7 +15,12 @@ class Site extends Model
         'default',
         'user_id',
         'domain',
-        'scheme'
+        'scheme',
+        'notification_emails'
+    ];
+
+    protected $casts = [
+        'notification_emails' => 'array'
     ];
 
     public function url(): string

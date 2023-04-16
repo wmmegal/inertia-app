@@ -6,6 +6,7 @@ use App\Http\Controllers\EndpointIndexController;
 use App\Http\Controllers\EndpointsStoreController;
 use App\Http\Controllers\EndpointUpdateController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SiteNotificationEmailStoreController;
 use App\Http\Controllers\SitesStoreController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -32,32 +33,18 @@ Route::get('/', function () {
 });
 
 // sites
-Route::get('/dashboard/{site?}', DashboardController::class)
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/dashboard/{site?}', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/sites', SitesStoreController::class)
-     ->middleware(['auth'])
-     ->name('add-site');
+Route::post('/sites', SitesStoreController::class)->middleware(['auth'])->name('add-site');
 
 //endpoints
-Route::post('/sites/{site}/endpoints', EndpointsStoreController::class)
-     ->middleware(['auth'])
-     ->name('add-endpoint');
+Route::post('/sites/{site}/endpoints', EndpointsStoreController::class)->middleware(['auth'])->name('add-endpoint');
+Route::get('/endpoints/{endpoint}', EndpointIndexController::class)->middleware(['auth'])->name('show-endpoint');
+Route::patch('/endpoints/{endpoint}', EndpointUpdateController::class)->middleware(['auth'])->name('update-endpoint');
+Route::delete('/endpoints/{endpoint}', EndpointDestroyController::class)->middleware(['auth'])->name('delete-endpoint');
 
-Route::get('/endpoints/{endpoint}', EndpointIndexController::class)
-     ->middleware(['auth'])
-     ->name('show-endpoint');
-
-Route::patch('/endpoints/{endpoint}', EndpointUpdateController::class)
-     ->middleware(['auth'])
-     ->name('update-endpoint');
-
-Route::delete('/endpoints/{endpoint}', EndpointDestroyController::class)
-     ->middleware(['auth'])
-     ->name('delete-endpoint');
-
-
+//notifications
+Route::post('/sites/{site}/notifications/email', SiteNotificationEmailStoreController::class)->middleware('auth')->name('notifications.email');
 
 // user
 Route::middleware('auth')->group(function () {

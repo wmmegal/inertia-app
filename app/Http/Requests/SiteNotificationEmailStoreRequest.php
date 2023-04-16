@@ -3,16 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class EndpointShowRequest extends FormRequest
+class SiteNotificationEmailStoreRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can('show', $this->endpoint);
+        return $this->user()->can('storeNotificationEmail', $this->site);
     }
 
     /**
@@ -23,7 +23,7 @@ class EndpointShowRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'email' => ['required', 'email', Rule::notIn($this->site->notification_emails)]
         ];
     }
 }
