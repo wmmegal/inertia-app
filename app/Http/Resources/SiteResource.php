@@ -16,7 +16,8 @@ class SiteResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'domain' => $this->domain
+            'domain' => $this->domain,
+            'notification_emails' => $this->notification_emails
         ];
     }
 }

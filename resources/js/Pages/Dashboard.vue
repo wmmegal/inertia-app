@@ -95,7 +95,7 @@
                         <h2 class="font-semibold text-lg text-gray-800 leading-tight">Notification channels</h2>
 
                         <div class="grid grid-cols-3 gap-12 mt-4">
-                            <EmailNotifications :site="site"/>
+                            <EmailNotifications :site="site" :emails="site.data.notification_emails"/>
                         </div>
                     </div>
 
