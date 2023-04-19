@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Check;
 use App\Models\Endpoint;
 use App\Models\Site;
+use App\Observers\CheckObserver;
 use App\Observers\EndpointObserver;
 use App\Observers\SiteObserver;
 use Illuminate\Auth\Events\Registered;
@@ -31,6 +33,7 @@ class EventServiceProvider extends ServiceProvider
     {
         Site::observe(SiteObserver::class);
         Endpoint::observe(EndpointObserver::class);
+        Check::observe(CheckObserver::class);
     }
 
     /**

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use LaravelIdea\Helper\App\Models\_IH_Check_QB;
 use Symfony\Component\HttpFoundation\Response;
 
 class Check extends Model
@@ -29,5 +31,10 @@ class Check extends Model
     public function statusText(): string
     {
         return Response::$statusTexts[$this->response_code] ?? 'Unknown';
+    }
+
+    public function previous(): Check|HasMany|_IH_Check_QB|null
+    {
+        return $this->endpoint->checks()->orderBy('id', 'desc')->where('id', '<', $this->id)->first();
     }
 }
