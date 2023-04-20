@@ -6,6 +6,7 @@ use App\Http\Controllers\EndpointIndexController;
 use App\Http\Controllers\EndpointsStoreController;
 use App\Http\Controllers\EndpointUpdateController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SiteDestroyController;
 use App\Http\Controllers\SiteNotificationEmailDestroyController;
 use App\Http\Controllers\SiteNotificationEmailStoreController;
 use App\Http\Controllers\SitesStoreController;
@@ -35,8 +36,8 @@ Route::get('/', function () {
 
 // sites
 Route::get('/dashboard/{site?}', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::post('/sites', SitesStoreController::class)->middleware(['auth'])->name('add-site');
+Route::delete('/sites/{site}', SiteDestroyController::class)->middleware(['auth'])->name('site.destroy');
 
 //endpoints
 Route::post('/sites/{site}/endpoints', EndpointsStoreController::class)->middleware(['auth'])->name('add-endpoint');

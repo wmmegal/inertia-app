@@ -13,7 +13,7 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <template v-if="!sites">
+                <template v-if="!site">
                     <p class="text-center text-gray-500 font-medium text-sm">No sites yet. Create one to get started</p>
                 </template>
                 <template v-else>
@@ -100,7 +100,7 @@
                     </div>
 
                     <div class="mt-8">
-                        <button class="text-red-500 text-sm">Delete site</button>
+                        <button @click="deleteSite" class="text-red-500 text-sm">Delete site</button>
                     </div>
                 </template>
             </div>
@@ -110,7 +110,7 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head, useForm, usePage} from '@inertiajs/vue3';
+import {Head, useForm, usePage, router} from '@inertiajs/vue3';
 import SiteSelector from "@/Components/SiteSelector.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -140,5 +140,11 @@ const storeEndpoint = () => {
             endpointForm.reset()
         }
     })
+}
+
+const deleteSite = () => {
+    if (window.confirm('You sure?')) {
+        router.delete(route('site.destroy', props.site.data))
+    }
 }
 </script>
