@@ -11,6 +11,8 @@ class DashboardController extends Controller
 {
     public function __invoke(Request $request, Site $site)
     {
+        $site->load('endpoints.site', 'endpoints.checks', 'endpoints.check');
+
         $site->update(['default' => true]);
 
         if ( ! $site->exists) {
@@ -18,7 +20,7 @@ class DashboardController extends Controller
         }
 
         return inertia('Dashboard', [
-            'site'  => $site ? SiteResource::make($site) : null,
+            'site'      => $site ? SiteResource::make($site) : null,
             'endpoints' => $site ? EndpointResource::collection($site?->endpoints) : null
         ]);
     }
