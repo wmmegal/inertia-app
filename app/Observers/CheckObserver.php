@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\EndpointWentDown;
 use App\Models\Check;
 use Log;
 
@@ -13,7 +14,7 @@ class CheckObserver
             ! $check->isSuccessful() &&
             ($check->previous()->isSuccessful() || $check->endpoint->checks->count() === 1)
         ) {
-            Log::info('Notify user');
+            EndpointWentDown::dispatch($check);
         }
     }
 }

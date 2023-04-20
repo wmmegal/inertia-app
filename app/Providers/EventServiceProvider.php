@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\EndpointWentDown;
+use App\Listeners\SendDownEmailNotifications;
 use App\Models\Check;
 use App\Models\Endpoint;
 use App\Models\Site;
@@ -21,8 +23,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
+        Registered::class       => [
             SendEmailVerificationNotification::class,
+        ],
+        EndpointWentDown::class => [
+            SendDownEmailNotifications::class,
         ],
     ];
 

@@ -42,7 +42,7 @@ class Endpoint extends Model
         return $this->hasOne(Check::class)->latestOfMany();
     }
 
-    public function uptimePercent()
+    public function uptimePercent(): ?string
     {
         if ( ! $this->checks->count()) {
             return null;
