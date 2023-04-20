@@ -13,14 +13,14 @@ class CheckObserver
     {
         if (
             ! $check->isSuccessful() &&
-            ($check->previous()->isSuccessful() || $check->endpoint->checks->count() === 1)
+            ($check->previous()?->isSuccessful() || $check->endpoint->checks->count() === 1)
         ) {
             EndpointWentDown::dispatch($check);
         }
 
         if (
             $check->isSuccessful() &&
-            ! $check->previous()->isSuccessful() && $check->endpoint->checks->count() >= 1
+            ! $check->previous()?->isSuccessful() && $check->endpoint->checks->count() !== 1
         ) {
             EndpointRecovered::dispatch($check);
         }
