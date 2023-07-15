@@ -7,7 +7,7 @@ use Arr;
 
 class EndpointObserver
 {
-    public function creating(Endpoint $endpoint)
+    public function creating(Endpoint $endpoint): void
     {
         $parsed               = parse_url($endpoint->site->url().'/'.$endpoint->location);
         $endpoint->location   = '/'.trim(trim(Arr::get($parsed, 'path'), '/').'?'.Arr::get($parsed, 'query'), '?');
