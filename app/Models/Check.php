@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use LaravelIdea\Helper\App\Models\_IH_Check_QB;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Check extends Model
 {
     use HasFactory;
-    use Prunable;
+    use MassPrunable;
 
     protected $fillable = [
         'response_code',
