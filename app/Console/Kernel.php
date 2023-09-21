@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+         $schedule->command('model:prune')->daily();
     }
 
     protected function shortSchedule(ShortSchedule $schedule): void
