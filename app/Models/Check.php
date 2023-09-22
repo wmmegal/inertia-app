@@ -22,7 +22,7 @@ class Check extends Model
 
     public function prunable(): Check
     {
-        return static::where('created_at', '<=', now()->day(1));
+        return static::where('created_at', '<=', now()->subDay());
     }
 
     public function endpoint(): BelongsTo
